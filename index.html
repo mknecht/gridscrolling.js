@@ -1,0 +1,102 @@
+---
+layout: default
+title: gridscrolling.js
+---
+
+<header>
+  <hgroup><h1><span style="color:#48F">grid</span>scrolling.js</h1></hgroup>
+  <p>Have an article with a clear structure, but lots of &lt;aside&gt;?<br>
+    Meet gridscrolling.js, your new best friend!</p>
+
+  <p style="margin:2em">Press arrow down, for more info.</p>
+</header>
+<section>
+  <hgroup><h2>First Comes First</h2></hgroup>
+  <p>You focus on your article. Section following section, and asides in between.</p>
+  <p>gridscrolling.js takes care of layouting, by giving you a clear path thru the mains, and the easy option to dig in the asides if wanted.</p>
+</section>
+<section>
+  <hgroup><h2>Navigation</h2></hgroup>
+  <p>Have a look at the top and bottom: An arrow indicates if cursor keys can be used to skip to the next section.</p>
+
+  <p>An arrow on the right-hand side means, there is an aside to explore.</p>
+
+  <p>Go have a look by pressing the right-arrow key.</p>
+</section>
+<aside>
+  <hgroup><h2>Links</h2></hgroup>
+  <p>Normal links to fragments are being replaced by a smooth scroll to the respective aside or section.</p>
+  <p>Try <a href="#overview">this link</a> to explore the next aside.</p>
+</aside>
+
+<aside>
+  <hgroup><h2><a name="overview">Overview Map</a></h2></hgroup>
+  <p>Notice the map in the upper right corner? The highlighted square tells you where you are.</p>
+
+  <p>Press the left arrow twice to return to the main section.</p>
+</aside>
+
+<section>
+  <hgroup><h2><a name="navigation-no-js">No Javascript?</a></h2></hgroup>
+  <p>You don't have Javascript enabled?</p>
+  <p>No worries! Degrading with style, the article can be read linearly (almost) as nice.</p>
+  <p>Your links work just as well as in the 90s.</p>
+</section>
+
+<section>
+  <hgroup><h2>How to Use</h2></hgroup>
+  <ol>
+    <li>Get <a href="http://jquery.com/">jQuery</a></li>
+    <li>Get the <code>.js</code> and the <code>.css</code> file from <a href="https://github.com/mknecht/gridscrolling.js">github</a>.</li>
+    <li>Include them in your page.</li>
+    <li>When the document is loaded and ready, initialize gridscrolling.js (<a href="#init-gs">see snippet</a>)</li>
+  </ol>
+</section>
+
+<aside>
+  <hgroup><h2><a name="init-gs">Initialize gridscrolling.js</a></h2></hgroup>
+  <pre class="prettyprint">    $(function() {
+	$('body').gridscrolling("init");
+    });
+  </pre>
+</aside>
+
+<section>
+  <hgroup><h2>Tailoring</h2></hgroup>
+  <p><a href="#custom-css">Style the looks</a> of the overview map or the arrows to blend in.</p>
+  <p><a href="#custom-js">Javascript options</a> can be used to customize gridscrolling.js behavior according to your needs.</p>
+</section>
+
+
+
+<aside>
+  <hgroup><h2><a name="custom-css">Custom colors</a></h2></hgroup>
+  <p>The minimum necessary modification is probably to adapt the colors to your
+    color scheme. Here are the respective css properties to do so.
+    Also, have a look at <a href="css/main.css">the stylesheet of this site</a>.</p>
+  <pre class="prettyprint">#gridscrolling-overview { border-color: #BBB; }
+.gridscrolling-overview-square { background-color: #BBB; }
+.gridscrolling-looking-at { background-color: #48F; }
+#gridscrolling-top-marker { border-bottom-color: #357; }
+#gridscrolling-bottom-marker { border-top-color: #357; }
+#gridscrolling-left-marker { border-right-color: #357; }
+#gridscrolling-right-marker { border-left-color: #357; }
+  </pre>
+</aside>
+
+<aside>
+  <hgroup><h2><a name="custom-js">Customize behavior</a></h2></hgroup>
+  <p>The following options can be used to change the behavior of gridscrolling.js:</p>
+  <pre class="prettyprint">
+	$('body').gridscrolling("init", {
+	    animationSpeed: 400,
+	    showMarker: true,
+	    showOverviewMap: true
+	});
+  </pre>
+</aside>
+
+<footer>
+  <hgroup><h2>Acknowledgements</h2></hgroup>
+  <p>This plugin was inspired by <a href="http://nick-jonas.github.io/windows/">windows plugin</a> by Nick Jonas. Thanks also go to the jQuery guys. (Please include <code>reduce</code>!)</p>
+</footer>

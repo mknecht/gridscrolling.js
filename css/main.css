@@ -1,0 +1,169 @@
+/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+
+body {
+  background-color: #333;
+  color: #BBB;
+  font: 16px Helvetica, Arial, sans-serif;
+  font-size: 140%;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: .8em;
+    font-size: 100%;
+}
+
+h1 { 
+    font-size: 500%;
+}
+
+pre {
+    text-align: left;
+}
+
+header, section, aside, footer {
+    margin: 3em 0em;
+    padding: 0 10em;
+}
+
+h2 {
+    font-size: 300%;
+}
+
+p { margin: 1em 0; }
+
+a         { color: #48F;
+	  text-decoration: underline;}
+a:hover   { color: #000; }
+a:visited { color: #a0a; }
+
+h2 a {
+    color: #BBB;
+    text-decoration: none;
+}
+
+/** prettify */
+
+
+/** prettyprint using prettifyjs */
+/* line 138, ../_sass/site.scss */
+pre.prettyprint {
+  padding: 1em 2em;
+  margin-left: -2em;
+  margin-right: -2em;
+  /* in case it's the last element, so we don't cut the round corner. */
+  margin-bottom: 1em;
+}
+
+/* SPAN elements with the classes below are added by prettyprint. */
+/* line 153, ../_sass/site.scss */
+pre {
+  /* plain text */
+  /* string content */
+  /* a keyword */
+  /* a comment */
+  /* a type name */
+  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  /* a markup tag name */
+  /* a markup attribute name */
+  /* a markup attribute value */
+  /* a declaration; a variable name */
+  /* a function name */
+}
+/* line 154, ../_sass/site.scss */
+pre .pln {
+  color: #657b83;
+}
+/* line 155, ../_sass/site.scss */
+pre .str {
+  color: #268bd2;
+}
+/* line 156, ../_sass/site.scss */
+pre .kwd {
+  color: #b58900;
+}
+/* line 157, ../_sass/site.scss */
+pre .com {
+  color: #859900;
+}
+/* line 158, ../_sass/site.scss */
+pre .typ {
+  color: #dc322f;
+}
+/* line 159, ../_sass/site.scss */
+pre .lit {
+  color: #268bd2;
+}
+/* line 161, ../_sass/site.scss */
+pre .pun, pre .opn, pre .clo {
+  color: #657b83;
+}
+/* line 162, ../_sass/site.scss */
+pre .tag {
+  color: #dc322f;
+}
+/* line 163, ../_sass/site.scss */
+pre .atn {
+  color: #dc322f;
+}
+/* line 164, ../_sass/site.scss */
+pre .atv {
+  color: #268bd2;
+}
+/* line 165, ../_sass/site.scss */
+pre .dec, pre .var {
+  color: #dc322f;
+}
+/* line 166, ../_sass/site.scss */
+pre .fun {
+  color: #b58900;
+}
+
+
+/*****************************************************************************/
+/*
+/* gridscrolling.js
+/*
+/*****************************************************************************/
+
+
+#gridscrolling-overview {
+    border-color: #BBB;
+}
+
+.gridscrolling-overview-square {
+    background-color: #BBB;
+}
+
+.gridscrolling-looking-at {
+    background-color: #48F;
+}
+
+#gridscrolling-top-marker {
+    border-bottom-color: #357; 
+}
+
+#gridscrolling-bottom-marker {
+    border-top-color: #357;
+}
+
+#gridscrolling-left-marker {
+    border-right-color: #357;
+}
+
+#gridscrolling-right-marker {
+    border-left-color: #357;
+}
