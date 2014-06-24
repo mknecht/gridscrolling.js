@@ -85,6 +85,9 @@
     };
     
     grid = {
+	init: function(options) {
+	    this.animationSpeed = options.animationSpeed;
+	},
 	moveRel: function (xdiff, ydiff, options) {
 	    var pos = this.getCurrentCell().gridscrolling('getCoordinates');
 	    this.moveToCoord({y: pos.y + ydiff, x: pos.x + xdiff}, options);
@@ -111,7 +114,7 @@
 	    $('html:not(:animated),body:not(:animated)').animate({
 		scrollLeft: cell.gridscrolling('getCoordinates').x * $w.width(),
 		scrollTop: cell.offset().top - topMargin(cell) + ydiff
-	    }, 400);
+	    }, this.animationSpeed);
 	    $('hgroup a[name]', cell).each(function(_, el) {
 		var name = $(el).attr("name");
 		$(el).attr('name', "");
@@ -185,7 +188,7 @@
 	    function positionCells() {
 		$('div.gridscrolling-main').each(function() {
 		    var section = $(this);
-		    var secOff = section.offset();
+		    var secOff = section.children().eq(0).offset();
 		    section.nextUntil('div.gridscrolling-main', 'div.gridscrolling-aside').each(function(idx) {
 			var asideDiv = $(this);
 			(asideDiv
@@ -351,13 +354,22 @@
 	},
 	init: function(custom) {
 	    var defaults = {
+		'animationSpeed': 400,
+		'showOverviewMap': true,
+		'showMarker': true
 	    }
 	    var options = $.extend(defaults, custom);
+	    grid.init(options);
 	    grid.createCells();
 	    grid.layoutCells();
 	    grid.replaceLinks();
-	    overview.init();
-	    markers.init();
+
+	    if (options.showOverviewMap === true) {
+		overview.init();
+	    }
+	    if (options.showMarker === true) {
+		markers.init();
+	    }
 	    $(document).keydown(handleKeydown);
 	    return this;
 	}
@@ -365,7 +377,7 @@
 
     if ($.fn.gridscrolling === undefined) {
 	$.fn.gridscrolling = function(action, options) {
-	    return actions[action].apply(this, options);
+	    return actions[action].call(this, options);
 	}
     }
 
