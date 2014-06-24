@@ -1,0 +1,42 @@
+.box-overview {
+    background-color: grey;
+}
+
+.box-overview.box-looking-at {
+    background-color: blue;
+}
+
+#box-overview {
+    border: solid 1px black;
+}
+
+.box-marker {
+    position: fixed;
+    width: 0; 
+    height: 0; 
+ 
+}
+
+#box-top-marker {
+    border-bottom: 20px solid grey; 
+    border-left: 60px solid transparent; 
+    border-right: 60px solid transparent; 
+}
+
+#box-bottom-marker {
+    border-top: 20px solid grey; 
+    border-left: 60px solid transparent; 
+    border-right: 60px solid transparent; 
+}
+
+#box-left-marker {
+    border-right: 20px solid grey;
+    border-top: 60px solid transparent; 
+    border-bottom: 60px solid transparent; 
+}
+
+#box-right-marker {
+    border-left: 20px solid grey;
+    border-top: 60px solid transparent; 
+    border-bottom: 60px solid transparent; 
+}
