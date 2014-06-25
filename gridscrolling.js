@@ -123,28 +123,28 @@
 	    });
 	},
 	handleArrowDown: function() {
-	    if (this.isMoveDownPossible()) {
+	    if (this.canMoveDown()) {
 		this.moveRel(0, 1);
 		return false;
 	    }
 	    return true;
 	},
 	handleArrowUp: function() {
-	    if (this.isMoveUpPossible()) {
+	    if (this.canMoveUp()) {
 		this.moveRel(0, -1, {bottom: true});
 		return false;
 	    }
 	    return true;
 	},
 	handleArrowLeft: function() {
-	    if (this.isMoveLeftPossible()) {
+	    if (this.canMoveLeft()) {
 		this.moveRel(-1, 0);
 		return false;
 	    }
 	    return true;
 	},
 	handleArrowRight: function() {
-	    if (this.isMoveRightPossible()) {
+	    if (this.canMoveRight()) {
 		grid.moveRel(+1, 0);
 		return false;
 	    }
@@ -234,7 +234,7 @@
 		});
 	    });
 	},
-	isMoveUpPossible: function(cell) {
+	canMoveUp: function(cell) {
 	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
 	    if (cell.length > 0) {
 		return cell.gridscrolling('getCoordinates').y > 0 && !cell.gridscrolling('hasContentAbove');
@@ -242,7 +242,7 @@
 		return $w.scrollTop() > 0;
 	    }
 	},
-	isMoveDownPossible: function(cell) {
+	canMoveDown: function(cell) {
 	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
 	    if (cell.length > 0) {
 		var co = cell.gridscrolling('getCoordinates');
@@ -252,7 +252,7 @@
 		return $(document).height() > $w.scrollTop() + $w.height();
 	    }
 	},
-	isMoveLeftPossible: function(cell) {
+	canMoveLeft: function(cell) {
 	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
 	    if (cell.length > 0) {
 		var co = cell.gridscrolling('getCoordinates');
@@ -260,7 +260,7 @@
 	    }
 	    return false;
 	},
-	isMoveRightPossible: function(cell) {
+	canMoveRight: function(cell) {
 	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
 	    if (cell.length > 0) {
 		var co = cell.gridscrolling('getCoordinates');
@@ -312,10 +312,10 @@
 		var el = $('#' + el_id);
 		(condition ? el.show : el.hide).apply(el);
 	    }
-	    showOrHideMarker('gridscrolling-top-marker', grid.isMoveUpPossible(cell));
-	    showOrHideMarker('gridscrolling-bottom-marker', grid.isMoveDownPossible(cell));
-	    showOrHideMarker('gridscrolling-left-marker', grid.isMoveLeftPossible(cell));
-	    showOrHideMarker('gridscrolling-right-marker', grid.isMoveRightPossible(cell));
+	    showOrHideMarker('gridscrolling-top-marker', grid.canMoveUp(cell));
+	    showOrHideMarker('gridscrolling-bottom-marker', grid.canMoveDown(cell));
+	    showOrHideMarker('gridscrolling-left-marker', grid.canMoveLeft(cell));
+	    showOrHideMarker('gridscrolling-right-marker', grid.canMoveRight(cell));
 	}
     }
     var actions = {
