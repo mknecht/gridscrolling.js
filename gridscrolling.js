@@ -237,7 +237,12 @@
 	canMoveUp: function(cell) {
 	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
 	    if (cell.length > 0) {
-		return cell.gridscrolling('getCoordinates').y > 0 && !cell.gridscrolling('hasContentAbove');
+		var co = cell.gridscrolling('getCoordinates');
+		return (
+		    cell.gridscrolling('getCoordinates').y > 0
+			&& grid.getCellAt({x: co.x, y: co.y - 1}).length > 0
+			&& !cell.gridscrolling('hasContentAbove')
+		);
 	    } else {
 		return $w.scrollTop() > 0;
 	    }
