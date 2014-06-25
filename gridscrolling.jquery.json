@@ -1,0 +1,23 @@
+{
+    "name": "gridscrolling",
+    "version": "0.0.1",
+    "title": "gridscrolling.js",
+    "author": {
+	"name": "Murat Knecht",
+	"url": "http://muratknecht.de"
+    },
+    "licenses": [ {
+	"type": "MIT",
+	"url": "https://github.com/mknecht/gridscrolling.js/blob/master/LICENSE.txt"
+    } ],
+    "dependencies": {
+	"jquery": ">=2.0.0"
+    },
+    "description": "Layouts your HTML5 article for you and provides easy cursor navigation and an overview map.",
+    "keywords": ["layout", "html5", "article", "navigation"],
+    "homepage": "http://mknecht.github.io/gridscrolling.js",
+    "demo": "http://mknecht.github.io/gridscrolling.js",
+    "docs": "http://mknecht.github.io/gridscrolling.js",
+    "bugs": "https://github.com/mknecht/gridscrolling.js/issues"
+}
+    
