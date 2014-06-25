@@ -1,3 +1,14 @@
+/**
+ * gridscrolling.js
+ * 
+ * A jQuery plugin that will layout your HTML5 article
+ * and give you easy navigation support.
+ * 
+ * homepage: http://mknecht.github.io/gridscrolling.js/
+ * license: MIT
+ * 
+ * Copyright (c) 2014 Murat Knecht
+ */
 (function ($, window, document) {
     var $w = $(window);
     var $d = $(document);
