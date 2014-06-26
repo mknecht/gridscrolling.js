@@ -254,8 +254,6 @@
 			&& grid.getCellAt({x: co.x, y: co.y - 1}).length > 0
 			&& !cell.gridscrolling('hasContentAbove')
 		);
-	    } else {
-		return $w.scrollTop() > 0;
 	    }
 	},
 	canMoveDown: function(cell) {
@@ -264,8 +262,6 @@
 		var co = cell.gridscrolling('getCoordinates');
 		return ((grid.getCellAt({x: co.x, y: co.y + 1}).length > 0)
 			&& !cell.gridscrolling('hasContentBelow'));
-	    } else {
-		return $(document).height() > $w.scrollTop() + $w.height();
 	    }
 	},
 	canMoveLeft: function(cell) {
