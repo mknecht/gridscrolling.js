@@ -12,9 +12,14 @@
 (function ($, window, document) {
     var $w = $(window);
     var $d = $(document);
+    /** Representation of the article's structure and
+	controller of the scrolling thru it. */
     var grid;
-    var overview;
-    var markers;
+    /** Representation of the Overview Map in the upper right corner. */
+    var overview; 
+    /** Controller of the arrows indicating in which direction movement
+	is possible. */
+    var indicators;
     
     function handleKeydown(e) {
 	var handlers = {
@@ -96,41 +101,73 @@
     };
     
     grid = {
-	init: function(options) {
-	    this.animationSpeed = options.animationSpeed;
+	canMoveDown: function(cell) {
+	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
+	    if (cell.length > 0) {
+		var co = cell.gridscrolling('getCoordinates');
+		return ((grid.getCellAt({x: co.x, y: co.y + 1}).length > 0)
+			&& !cell.gridscrolling('hasContentBelow'));
+	    }
 	},
-	moveRel: function (xdiff, ydiff, options) {
-	    var pos = this.getCurrentCell().gridscrolling('getCoordinates');
-	    this.moveToCoord({y: pos.y + ydiff, x: pos.x + xdiff}, options);
+	canMoveLeft: function(cell) {
+	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
+	    if (cell.length > 0) {
+		var co = cell.gridscrolling('getCoordinates');
+		return (co.x > 0 && (grid.getCellAt({x: co.x - 1, y: co.y}).length > 0));
+	    }
+	    return false;
 	},
-	moveToCoord: function(pos, custom) {
-       	    if (pos.x < 0 || pos.y < 0) {
-		return;
+	canMoveRight: function(cell) {
+	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
+	    if (cell.length > 0) {
+		var co = cell.gridscrolling('getCoordinates');
+		return (grid.getCellAt({x: co.x + 1, y: co.y}).length > 0);
 	    }
-	    this.moveToCell(this.getCellAt(pos), custom);
+	    return false;
 	},
-	moveToCell: function(cell, custom) {
-	    function topMargin(cell) {
-		return parseInt(cell.children().css('margin-top'));
+	canMoveUp: function(cell) {
+	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
+	    if (cell.length > 0) {
+		var co = cell.gridscrolling('getCoordinates');
+		return (
+		    cell.gridscrolling('getCoordinates').y > 0
+			&& grid.getCellAt({x: co.x, y: co.y - 1}).length > 0
+			&& !cell.gridscrolling('hasContentAbove')
+		);
 	    }
-	    function leftMargin(cell) {
-		return parseInt(cell.children().css('margin-left'));
-	    }
-	    var defaults = {bottom:false};
-	    var options = $.extend({}, defaults, custom);
-	    if (cell.length === 0) {
-		return;
-	    }
-	    var ydiff = (options.bottom && (cell.children().outerHeight(true) > $w.height())) ? (Math.max(cell.children().outerHeight(true) - $w.height())) : 0;
-	    $('html:not(:animated),body:not(:animated)').animate({
-		scrollLeft: cell.gridscrolling('getCoordinates').x * $w.width(),
-		scrollTop: cell.offset().top - topMargin(cell) + ydiff
-	    }, this.animationSpeed);
-	    $('hgroup a[name]', cell).each(function(_, el) {
-		var name = $(el).attr("name");
-		$(el).attr('name', "");
-		location.hash = name;
-		$(el).attr('name', name);
+	},
+	createCells: function() {
+	    $('header, section, footer').each(function() {
+		var section_div = $(this).wrap("<div></div>").parent("div");
+		section_div.nextUntil('section, footer', 'aside').each(function(idx) {
+		    $(this).wrap("<div></div>").parent().addClass("gridscrolling-cell gridscrolling-aside");
+		});
+		section_div.addClass("gridscrolling-cell gridscrolling-main");
+	    });
+	},
+	getCellAt: function(pos) {
+	    return (
+		$('div.gridscrolling-main')
+		    .eq(pos.y)
+		    .nextUntil('div.gridscrolling-main', 'div.gridscrolling-aside')
+		    .addBack() // 
+		    .eq(pos.x)
+	    );
+	},
+	getCellAtPos: function(pos) {
+	    return $('div.gridscrolling-cell').filter(function(_, el) {
+		var cell = $(el);
+		return (
+		    cell.offset().left <= pos.left
+			&& (cell.offset().left + cell.width()) >= pos.left
+			&& cell.offset().top <= pos.top
+			&& (cell.offset().top + cell.height()) >= pos.top
+		);
+	    });
+	},
+	getCurrentCell: function() {
+	    return $('div.gridscrolling-cell').filter(function(idx, el) {
+		return $(this).gridscrolling('isBeingLookedAt');
 	    });
 	},
 	handleArrowDown: function() {
@@ -161,39 +198,8 @@
 	    }
 	    return true;
 	},
-	getCurrentCell: function() {
-	    return $('div.gridscrolling-cell').filter(function(idx, el) {
-		return $(this).gridscrolling('isBeingLookedAt');
-	    });
-	},
-	getCellAt: function(pos) {
-	    return (
-		$('div.gridscrolling-main')
-		    .eq(pos.y)
-		    .nextUntil('div.gridscrolling-main', 'div.gridscrolling-aside')
-		    .addBack() // 
-		    .eq(pos.x)
-	    );
-	},
-	getCellAtPos: function(pos) {
-	    return $('div.gridscrolling-cell').filter(function(_, el) {
-		var cell = $(el);
-		return (
-		    cell.offset().left <= pos.left
-			&& (cell.offset().left + cell.width()) >= pos.left
-			&& cell.offset().top <= pos.top
-			&& (cell.offset().top + cell.height()) >= pos.top
-		);
-	    });
-	},
-	createCells: function() {
-	    $('header, section, footer').each(function() {
-		var section_div = $(this).wrap("<div></div>").parent("div");
-		section_div.nextUntil('section, footer', 'aside').each(function(idx) {
-		    $(this).wrap("<div></div>").parent().addClass("gridscrolling-cell gridscrolling-aside");
-		});
-		section_div.addClass("gridscrolling-cell gridscrolling-main");
-	    });
+	init: function(options) {
+	    this.animationSpeed = options.animationSpeed;
 	},
 	layoutCells: function() {
 	    function positionCells() {
@@ -234,6 +240,40 @@
 	    homogenizeDimensions();
 	    positionCells();
 	},
+	moveRel: function (xdiff, ydiff, options) {
+	    var pos = this.getCurrentCell().gridscrolling('getCoordinates');
+	    this.moveToCoord({y: pos.y + ydiff, x: pos.x + xdiff}, options);
+	},
+	moveToCell: function(cell, custom) {
+	    function topMargin(cell) {
+		return parseInt(cell.children().css('margin-top'));
+	    }
+	    function leftMargin(cell) {
+		return parseInt(cell.children().css('margin-left'));
+	    }
+	    var defaults = {bottom:false};
+	    var options = $.extend({}, defaults, custom);
+	    if (cell.length === 0) {
+		return;
+	    }
+	    var ydiff = (options.bottom && (cell.children().outerHeight(true) > $w.height())) ? (Math.max(cell.children().outerHeight(true) - $w.height())) : 0;
+	    $('html:not(:animated),body:not(:animated)').animate({
+		scrollLeft: cell.gridscrolling('getCoordinates').x * $w.width(),
+		scrollTop: cell.offset().top - topMargin(cell) + ydiff
+	    }, this.animationSpeed);
+	    $('hgroup a[name]', cell).each(function(_, el) {
+		var name = $(el).attr("name");
+		$(el).attr('name', "");
+		location.hash = name;
+		$(el).attr('name', name);
+	    });
+	},
+	moveToCoord: function(pos, custom) {
+       	    if (pos.x < 0 || pos.y < 0) {
+		return;
+	    }
+	    this.moveToCell(this.getCellAt(pos), custom);
+	},
 	replaceLinks: function() {
 	    $('a[href^="#"]').each(function(_, el) {
 		var hash = $(el).attr('href').substr(1);
@@ -244,45 +284,10 @@
 		    return true;
 		});
 	    });
-	},
-	canMoveUp: function(cell) {
-	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
-	    if (cell.length > 0) {
-		var co = cell.gridscrolling('getCoordinates');
-		return (
-		    cell.gridscrolling('getCoordinates').y > 0
-			&& grid.getCellAt({x: co.x, y: co.y - 1}).length > 0
-			&& !cell.gridscrolling('hasContentAbove')
-		);
-	    }
-	},
-	canMoveDown: function(cell) {
-	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
-	    if (cell.length > 0) {
-		var co = cell.gridscrolling('getCoordinates');
-		return ((grid.getCellAt({x: co.x, y: co.y + 1}).length > 0)
-			&& !cell.gridscrolling('hasContentBelow'));
-	    }
-	},
-	canMoveLeft: function(cell) {
-	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
-	    if (cell.length > 0) {
-		var co = cell.gridscrolling('getCoordinates');
-		return (co.x > 0 && (grid.getCellAt({x: co.x - 1, y: co.y}).length > 0));
-	    }
-	    return false;
-	},
-	canMoveRight: function(cell) {
-	    var cell = cell === undefined ? grid.getCurrentCell() : cell;
-	    if (cell.length > 0) {
-		var co = cell.gridscrolling('getCoordinates');
-		return (grid.getCellAt({x: co.x + 1, y: co.y}).length > 0);
-	    }
-	    return false;
 	}
     };
 
-    markers = {
+    indicators = {
 	init: function() {
 	    function placeMarker(el_id, pos) {
 		var marker = (
@@ -316,7 +321,7 @@
 		'gridscrolling-right-marker',
 		{top: ($w.height() - width)/2, left: $w.width() - height - margin}
 	    );
-	    $(document).scroll(	function() { markers.update(grid.getCurrentCell()); } );
+	    $(document).scroll(	function() { indicators.update(grid.getCurrentCell()); } );
 	    this.update(grid.getCurrentCell());
 	},
 	update: function(cell) {
@@ -330,16 +335,9 @@
 	    showOrHideMarker('gridscrolling-right-marker', grid.canMoveRight(cell));
 	}
     }
+
+    /** Possible actions for the plugin function. */
     var actions = {
-	isBeingLookedAt: function() {
-	    var rect = this.get()[0].getBoundingClientRect();
-	    return (
-		rect.top < $w.height()/2 &&
-		    rect.left < $w.width()/2 &&
-		    rect.bottom > $w.height()/2 &&
-		    rect.right > $w.width()/2
-	    );
-	},
 	getCoordinates: function() {
 	    return {
 		y: $(this).prevAll('div.gridscrolling-main').length - ($(this).hasClass('gridscrolling-main') ? 0 : 1),
@@ -380,13 +378,23 @@
 		overview.init();
 	    }
 	    if (options.showMarker === true) {
-		markers.init();
+		indicators.init();
 	    }
 	    $(document).keydown(handleKeydown);
 	    return this;
+	},
+	isBeingLookedAt: function() {
+	    var rect = this.get()[0].getBoundingClientRect();
+	    return (
+		rect.top < $w.height()/2 &&
+		    rect.left < $w.width()/2 &&
+		    rect.bottom > $w.height()/2 &&
+		    rect.right > $w.width()/2
+	    );
 	}
     }
 
+    /** Register the plugin as recommended by the jQuery plugin site. */
     if ($.fn.gridscrolling === undefined) {
 	$.fn.gridscrolling = function(action, options) {
 	    return actions[action].call(this, options);
