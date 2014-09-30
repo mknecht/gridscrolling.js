@@ -1,6 +1,6 @@
 {
     "name": "gridscrolling",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "title": "gridscrolling.js",
     "author": {
 	"name": "Murat Knecht",
@@ -20,4 +20,3 @@
     "docs": "http://mknecht.github.io/gridscrolling.js",
     "bugs": "https://github.com/mknecht/gridscrolling.js/issues"
 }
-    
