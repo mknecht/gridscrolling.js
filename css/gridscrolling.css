@@ -2,47 +2,53 @@
  * gridscrolling.css
  * homepage: http://mknecht.github.io/gridscrolling.js/
  * license: MIT
- * 
+ *
  * Copyright (c) 2014 Murat Knecht
  */
-.gridscrolling-overview {
-    background-color: grey;
+.gridscrolling-looking-at {
+    background-color: blue;
 }
 
-.gridscrolling-overview.gridscrolling-looking-at {
-    background-color: blue;
+.gridscrolling-overview-square {
+    background-color: #BBB;
 }
 
 #gridscrolling-overview {
     border: solid 1px black;
 }
 
+@media (max-width: 1000px) {
+    #gridscrolling-overview {
+	background-color: grey;
+    }
+}
+
 .gridscrolling-marker {
     position: fixed;
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
 }
 
 #gridscrolling-top-marker {
-    border-bottom: 20px solid grey; 
-    border-left: 60px solid transparent; 
-    border-right: 60px solid transparent; 
+    border-bottom: 20px solid grey;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
 }
 
 #gridscrolling-bottom-marker {
-    border-top: 20px solid grey; 
-    border-left: 60px solid transparent; 
-    border-right: 60px solid transparent; 
+    border-top: 20px solid grey;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
 }
 
 #gridscrolling-left-marker {
     border-right: 20px solid grey;
-    border-top: 60px solid transparent; 
-    border-bottom: 60px solid transparent; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
 }
 
 #gridscrolling-right-marker {
     border-left: 20px solid grey;
-    border-top: 60px solid transparent; 
-    border-bottom: 60px solid transparent; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
 }

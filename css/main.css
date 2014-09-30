@@ -21,12 +21,36 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: .5 em;
+    margin: .5em;
     font-size: 100%;
 }
 
-h1 { 
+h1 {
     font-size: 500%;
+}
+@media all and (max-width: 1000px) {
+    h1 {
+	font-size: 300%;
+    }
+}
+@media all and (max-width: 400px) {
+    h1 {
+	font-size: 200%;
+    }
+}
+
+h2 {
+    font-size: 500%;
+}
+@media (max-width: 1000px) {
+    h2 {
+	font-size: 300%;
+    }
+}
+@media (max-width: 400px) {
+    h2 {
+	font-size: 200%;
+    }
 }
 
 pre {
@@ -37,10 +61,19 @@ header, section, aside, footer {
     margin: 3em 0em;
     padding: 0 10em;
 }
-
-h2 {
-    font-size: 300%;
+@media (max-width: 1000px) {
+    header, section, aside, footer {
+	margin: 2em 0em;
+	padding: 0 4em 0 2em;
+    }
 }
+@media (max-width: 400px) {
+    header, section, aside, footer {
+	margin: 2em 0em;
+	padding: 0 0.5em;
+    }
+}
+
 
 p { margin: 1em 0; }
 
@@ -144,6 +177,12 @@ pre .fun {
     border-color: #BBB;
 }
 
+@media (max-width: 1000px) {
+    #gridscrolling-overview {
+	background-color: #333;
+    }
+}
+
 .gridscrolling-overview-square {
     background-color: #BBB;
 }
@@ -153,7 +192,7 @@ pre .fun {
 }
 
 #gridscrolling-top-marker {
-    border-bottom-color: #357; 
+    border-bottom-color: #357;
 }
 
 #gridscrolling-bottom-marker {
