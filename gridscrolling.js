@@ -56,7 +56,7 @@
 	);
       }
 
-      var maxdepth = (
+      this.maxdepth = (
 	$('div.gridscrolling-main')
 	.map(function(_, el) {
 	  return $(el).nextUntil('div.gridscrolling-main', 'div.gridscrolling-aside').length;
@@ -68,10 +68,9 @@
       var overviewDiv = $('<div id="gridscrolling-overview"></div>')
       .appendTo('body')
       .css('position', 'fixed')
-      .css('top', 20)
-      .css('left', $w.width() - 20 - 15 * maxdepth - 5)
+      .css('display', 'none')
       .height(5 + $('div.gridscrolling-main').length * 15)
-      .width(5 + maxdepth * 15);
+      .width(5 + that.maxdepth * 15);
       $('div.gridscrolling-main').each(function(y, section) {
 	placeSquare(0, y, overviewDiv);
 	$(section).nextUntil('div.gridscrolling-main', 'div.gridscrolling-aside').each(function(x, aside) {
@@ -79,7 +78,15 @@
 	});
       });
       $(document).scroll(	function() { overview.update(); } );
+      this.updatePosition();
       this.update();
+      $('div#gridscrolling-overview').show()
+      $w.resize(function(){
+        that.updatePosition();
+      });
+      $w.on('orientationchange', function(){
+        that.updatePosition();
+      });
     },
     update: function() {
       var that = this;
@@ -97,6 +104,11 @@
       } else if (!box.hasClass("gridscrolling-looking-at") && isBeingLookedAt) {
 	box.addClass('gridscrolling-looking-at');
       }
+    },
+    updatePosition: function() {
+      $('div#gridscrolling-overview')
+      .css('top', 20)
+      .css('left', $w.width() - 20 - 15 * this.maxdepth - 5);
     }
   };
 
@@ -365,8 +377,10 @@
     init: function(custom) {
       var defaults = {
 	'animationSpeed': 400,
+        'hideOverviewMapOnTinyScreens': true,
 	'showOverviewMap': true,
-	'showMarker': true
+	'showMarker': true,
+        'tinyScreenWidth': 500
       }
       var options = $.extend(defaults, custom);
       grid.init(options);
@@ -375,7 +389,10 @@
       grid.replaceLinks();
 
       if (options.showOverviewMap === true) {
-	overview.init();
+        if (!options.hideOverviewMapOnTinyScreens
+          || $w.width() > options.tinyScreenWidth) {
+	  overview.init();
+        }
       }
       if (options.showMarker === true) {
 	indicators.init();

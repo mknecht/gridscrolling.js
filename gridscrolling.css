@@ -17,6 +17,12 @@
     border: solid 1px black;
 }
 
+@media (max-width: 1000px) {
+    #gridscrolling-overview {
+	background-color: grey;
+    }
+}
+
 .gridscrolling-marker {
     position: fixed;
     width: 0;
