@@ -5,12 +5,12 @@
  *
  * Copyright (c) 2014 Murat Knecht
  */
-.gridscrolling-overview {
-    background-color: grey;
+.gridscrolling-looking-at {
+    background-color: blue;
 }
 
-.gridscrolling-overview.gridscrolling-looking-at {
-    background-color: blue;
+.gridscrolling-overview-square {
+    background-color: #BBB;
 }
 
 #gridscrolling-overview {
