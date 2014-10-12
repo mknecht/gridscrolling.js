@@ -4,14 +4,13 @@
 	"gridscrolling.js",
 	"gridscrolling.css",
     ],
-    "version": "0.0.6",
     "homepage": "http://mknecht.github.io/gridscrolling.js/",
     "authors": [
 	"Murat Knecht"
     ],
     "description": "A layout for HTML5 articles, positioning sections and asides in a grid, allowing easy navigation with cursor keys.",
     "dependencies": {
-	"jquery": ">= 1.7"
+	"jquery": ">= 2.0"
     },
     "keywords": [
 	"jquery",
