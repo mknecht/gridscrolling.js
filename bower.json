@@ -10,9 +10,9 @@
 	"Murat Knecht"
     ],
     "description": "A layout for HTML5 articles, positioning sections and asides in a grid, allowing easy navigation with cursor keys.",
-    "dependencies": [
+    "dependencies": {
 	"jquery": ">= 1.7"
-    ],
+    },
     "keywords": [
 	"jquery",
 	"ui",
