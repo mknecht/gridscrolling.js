@@ -2,7 +2,7 @@
     "name": "gridscrolling.js",
     "main": [
 	"gridscrolling.js",
-	"gridscrolling.css",
+	"gridscrolling.css"
     ],
     "homepage": "http://mknecht.github.io/gridscrolling.js/",
     "authors": [
@@ -27,6 +27,6 @@
 	"bower_components",
 	"test",
 	"tests",
-	"gridscrolling.jquery.json",
+	"gridscrolling.jquery.json"
     ]
 }
